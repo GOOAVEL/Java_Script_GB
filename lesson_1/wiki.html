@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI_JS</title>
+    <script src="#" defer></script> <!-- Отложенное подключение -->
+    <script src="#" async></script> <!-- Ассинхронное подключение -->
+</head>
+
+<body>
+    <script>
+        // Директива "Строгий режим"
+        'use strict';
+
+        // Создание переменных:
+        var singleVariable // утаревшая переменная 
+        const b = 9 // константа
+        const cat = 'cat', dog = 'dog' //создание одновременно 2-х переменных
+        let a;  // Обьявление переменой
+
+        let c = 123;
+        c = 321; //Изменения значения переменой
+
+        // Ввод и ввывод:
+        a = prompt('Input any number:'); //в переменную попадет STRING!
+        alert('Your number: ' + a);
+        console.log(`Сумма переменных b(${b}) и c(${c}) = ${a = b + c}`)
+
+        /*
+            Название переменой можно начинать с _ и $
+            Но не с цифры, хотя после разрешенных символов цифры приминимы.
+            Также с нельзя ипользовать ключевые слова JS.
+        */
+
+        // ТИПЫ ДАННЫХ:
+
+        //11111111111111111111111111111111111111111111111111111111111111111111
+        //////////// STRING ///////////////
+        c = 'World' //Изменение переменой
+        console.log('Hello World!');
+        console.log("Hello " + c + "!");
+        console.log(`Hello ${c + ' I`m lucky'}!`);
+
+        // Конкатенация
+        console.log('Hello' + 10); // (string + number = string) Hello10
+
+        // Перенос строки
+        console.log('First line\nSecond line') // Сомвол переноса
+        console.log(`First line
+Second line`) // Перенос строки (Тольок с  `  кавычками)
+        console.log('Lorem, ipsum dolor sit amet consectetur adipisicing ' +
+            'elit. Ab maxime explicabo sunt animi corporis illum nostrum ' +
+            'inciduoluptas pariatur sequi?') // Продолжение строки без переноса
+        console.log('Lorem, ipsum dolor sit consectetur adipisicing elit. \
+Ab maxime explicabo sunt animi corporis illum eius nostrum incidunt \
+laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
+           expe sequi?') // Продолжение строки без переноса (другой вариант)
+
+        //Экранирование
+        console.log('Он сказал - \'Привет\'.');
+
+        console.log(c.length) // Показывает кол-во символов в строке (World) = 5
+
+        //22222222222222222222222222222222222222222222222222222222222222222222
+        //////////// NUMBER ///////////////
+        const PI = 3.14; // Реальныее константы пишутся  в UPERCASE
+        console.log(10 / 0); // Infinity
+        c = Infinity // Существующее значение как и  -0 и  -Infinity
+        console.log('Happy' * 10) // NaN - Not a number
+        console.log(typeof NaN) // Number)
+
+        // Превращение string в number
+        let strNumber = '9.43ccc' // Некоектное число первые 4 комадны = NaN
+        c = "56.076"
+
+        console.log(+c)        // 56.076
+        console.log(-c)       // -56.076
+        console.log(c * 1)     // 56.076
+        console.log(Number(c)) // 56.076
+        console.log(parseInt(strNumber))// Разбор челого числа = 9
+        // Разбор числа с плавяющей точкой
+        console.log(parseFloat(strNumber))// = 9.43
+        console.log(0.1 + 0.2) // 0.30000000000000004 (-_-)
+        0.1 + 0.2 != 0.3 // TRUE!
+        10 / 3 == 3.33333333333333335 // (-_-)
+
+        // Округление
+        c = "56.076"
+        console.log(Math.round(c)) // Математическое округление = 56
+        console.log(Math.floor(c)) // Округление к меньшему = 56
+        console.log(Math.ceil(c)) // Округление к большему = 57
+        console.log(Math.trunc(c)) // Отбрасывает дроб.часть = 56 Truncated (усеченный)
+        console.log(c.toFixed(2))// 56.07 Срезать знаки после точки
+        console.log(c.toFixed(7)) // 23.3430000
+        0xFF2300 == 16720640
+        2e10 == 20_000_000_000 == 20000000000
+
+        //33333333333333333333333333333333333333333333333333333333333333333
+        //////////// BIGINT ///////////////
+        2 ** 53 // После этого числа теряется точность
+        2783648723645237465237645237645732645n // typeof = bigint
+        /*
+            С помощью + унарного нельзя превратить bigint в (number)!
+            Только с помошью Number(324234n)!
+        */
+
+        //444444444444444444444444444444444444444444444444444444444444444444
+        //////////// BOOLEAN ///////////////
+        console.log(6 = 3) // False
+        console.log(6 = 6) // True 
+
+        //5555555555555555555555555555555555555555555555555555555555555555
+        //////////// Null ///////////////
+        let bob = Null; // Пусто
+
+        //666666666666666666666666666666666666666666666666666666666666666
+        //////////// Undefined ///////////////
+        let bib;
+        console.log(bib) // Undefined
+
+        //777777777777777777777777777777777777777777777777777777777777777777
+        //////////// Symbol ///////////////
+        // Уникальное значение которое нельзя повторить)
+
+        //8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#
+        //////////// Object ///////////////
+        // Набор данных из вышеприсутвующих
+        console.log(typeof null) // Object - ОШИБКА ERROR
+        const gg = function () { };
+        console.log(typeof gg) // function - ОШИБКА ERROR == Object
+        //*****************************************************************
+        c = 34 + 23; // c,34,23 - операнды а = и + - операторы
+        234236487 % 2 // определение честности числа = 0,so even if 2,so odd
+        34324 % 10 //определение последнего числа
+        c = 4
+        c += 4 // 8
+        c *= 4 // 16
+        5 == '5' // true 
+        //сначала сравнивает типы затем при == переводит string в number
+        5 === '5' // False
+        5 === Number('5') // true 
+
+        // &&  -  логичсекое И 
+        // ||  -  логическое ИЛИ
+    </script>
+</body>
+
+</html>
