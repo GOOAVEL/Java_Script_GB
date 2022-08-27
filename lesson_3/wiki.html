@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI_JS</title>
+    <script src="#" defer></script> <!-- Отложенное подключение -->
+    <script src="#" async></script> <!-- Ассинхронное подключение -->
+</head>
+
+<body>
+    <script>
+        // Директива "Строгий режим"
+        'use strict';
+
+        //..................... ЦИКЛЫ .....................
+        // Цикл №1
+        let i = 0; // переменная - счетчик
+        while (i < 3) {
+            console.log('Hello, World!'); // 3 раза выводит команду.
+            i++;
+        }
+
+        // Итерация(лат.iteratio «повторение») — повторение какого - либо действия.
+
+        // Цикл №2
+        do { // в отличии от while этот производит итерациию 1 раз как минимум.
+            console.log('Hello, World!'); // 3 раза выводит команду.
+            i++;
+        } while (i < 3);
+
+        // Цикл №3
+        for (первый; второй; третий) {
+            // Отделы:
+            // первый - действие до начала цикла напр. создание переменой несколько ","
+            // второй - условие выполнения цикла
+            // третий - действие после каждой итерации (несколько дейсвий через ",")
+        }
+
+        console.log(Number.isInteger(i)) //Проверка на целое число - True  (i = 0)
+
+        for (let i = 0; i < 3; i++) {      //переменая i создается в local scope.
+            console.log('Hello, World!'); //  компактнее и удобнее!
+        }
+        // Order:
+        // 1 Присваивание переменной
+        // 2 Проверка условия
+        // 3 Вывод console 0
+        // 4  i++;
+        // 5 Проверка условия
+        // 6 Вывод console 1
+        // 7  i++;
+        //...
+
+        // Примеры бесконечного цикла:
+        while (true) {
+            console.log('Wow');
+            break; // Выход из infiniti loop@
+        }
+
+        for (; ;) {
+            console.log('Wow');
+            break; // Выход из infiniti loop@
+        }
+
+        for (let i = 0; i < 4; i++) {
+            if (i === 2) {
+                console.log('Two');
+                continue; // Остановка и возвращение к выражению шага.
+            } console.log(i);
+        }
+        // Вывод: ( 1  2  Two  3 )
+
+        // Жалательно continue и break не использовать из-за усложнении логики кода.
+
+        //..................... ARRAY(МАССИВЫ) .....................
+        // INDEX:     0       1        2       3   4
+        const all = [123, 'Kirill', 'Alica', true, i]; // array
+        // индекс === названия свойсва === key
+
+        //..........................ARRAY METHODS..............................
+        console.log(all.length)  // method для определении длины (5)
+
+        all[0] = 'Pavel'   // преопределение индекса массива
+        all[10] = false   // array  увеличится до 10 и заполнит все пустыми значениями.
+
+        all.push('tiger', 23)  // method для добавлении * в конец массива
+        all.pop()         // method для удаления * с конца массива
+
+        all.unshift('firts')  // method для добавлении * в начало массива
+        all.shift()          // method для удаления * с начала массива
+
+        // При удалении можно присваивать * в переменую
+        const FirstDelItem = all.shift();   // Первый удаленный 
+        const LastDelItem = all.pop();     // Последний удаленный 
+        console.log(`Первое значение - ${FirstDelItem} - удаленно`);
+
+        /* Изменяет содержимое массива, удаляя существующие элементы и/или 
+        добавляя новые.                                                 */
+        all.splice(4)            // удалить все item после 4 
+        all.splice(4, 0, 'hi')  // add new item ('hi') after index 4
+
+        all.forEach(function (element, index, array) {
+            console.log(`В массиве под индексом: ${index}, значение: ${element}`);
+        });// run функцию для элемента || индекса || массива 
+
+        const newArr = all.filter((element, index, array) => { // стрелочная func
+            return Number.isInteger(element); //  [124, 4]
+        });// создает new array и add only те значение которые прошли функцию
+
+        //..................... OBJECT(ОБЬЕКТЫ) .....................
+        const user = {
+            //  property: value,
+            name: 'Kirill',
+            age: 23,
+            10: 'ten',              // 10 будет string
+            'I Q': Infinity,
+        };
+        console.log(user[10])      // ten
+
+        // 'Kirill' - получения значения через точку #1
+        console.log(user.name); // Kirill
+        // 'Kirill' - получения значения через точку #2
+        console.log(user['I Q']);  // Infinity
+
+        user.knowledge = 'JS';// Добавления нового свойтва и его значения 
+        console.log(user); // {name: 'Kirill', age: 23, knowledge: 'JS'}
+        user.name = 'Кирилл';  // пререопределение значения свойства
+
+        // object описывает что-то
+        const badUsers = [
+            {
+                name: 'Ivan',
+                surname: 'Ivanov',
+                age: 12,
+            },
+            {
+                name: 'Petr',
+                surname: 'Petrov',
+                age: 11,
+            }
+        ] // Масив двух обьектов 
+
+        // Двухмерный массив
+        const arrTwo = [
+            [23, 434, 6, 34],
+            ['hi', 'hello', 'he he'],
+            [true, false, null, undefined],
+            ['one', ['two', [7 + 7]]]
+        ]; console.log(arrTwo[3][1][1][0]);    // 14
+
+        const arr = [5, 7, 9]; // use переменой вместо цифры index
+        let a = 1; console.log(arr[a]); // 7
+
+        // перебор array #1
+        for (let i = 0; i < (arr.length); i++) {
+            console.log(arr[i]);  //  5   7   9 
+        }
+
+        // перебор array #2
+        for (const i in arr) {
+            console.log(i);  //  0   1   2 
+        } // преребирает все  № индекса у массива или свойcтва у object
+
+        // перебор array #3
+        for (const val in arr) {
+            console.log(val);  //  5   7   9 
+        } // преребирает все значения у object или у массива.
+        /* однако значения object можно перебрать в случае если у него
+         иемется функция  -  symbol.iterator !
+        */
+        //********************************************************
+        const array = [
+            [12, 33, 43],
+            ['fdf', 'error'],
+            [123, 45435, 5343455]
+        ];  // Двухмерный массив
+
+        uoterLoop: // lable(метка) - останавливает внешний цикл
+        for (let i = 0; i < array.length; i++) {
+            // при каждой итерации создается new const
+            const includeArr = array[i];
+            for (let i = 0; i < includeArr.length; i++) {
+                console.log(includeArr[i]);
+                break uoterLoop; // lable(метка) - останавливает внешний цикл
+            }
+        }
+        //********************************************************
+
+        const users = [ //массив с objects
+            { name: 'Иван', surname: 'Иванов', age: 32 },
+            { name: 'Данил', surname: 'Стяпин', age: 45 },
+            { name: 'Светлана', surname: 'Уткина', age: 17 }
+        ];
+        console.log(user[1].age)        //  45
+        console.log(users[2]['name'])  //  Светлана
+        /////////////////////...HARD OBJECT...//////////////////////////
+        const badUser = {
+            id: 4,
+            name: 'John',
+            socialNetworks: {
+                vk: 'https://vk.com/John',
+                instagram: 'https://www.instagram.com/goodcat/'
+            },
+            image: [
+                '1.JPEG',
+                '1.PNG',
+                '1.GIF'
+            ]
+        };
+
+        console.log(badUser.socialNetworks.vk);  //  https://vk.com/John
+        console.log(badUser.cats) // undefined
+        console.log(badUser.cats.cat) //  !! BIG ERROR !!
+        // ? - оператор опциональной последовательности 
+        console.log(badUser.social?.Net);
+        // показывает null || undefined в случает если свойтво таково, иначе
+        // показывает свойство другого объекта в объекте.
+
+        if ('socialNetworks' in badUser) {
+            console.log('Свойтво socialNetworks имеется внутри badUser');
+        } // проверка на наличие свойства внутри обекта
+
+    </script>
+</body>
+
+</html>
