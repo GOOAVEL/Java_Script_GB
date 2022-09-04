@@ -19,17 +19,14 @@
         let goodsCount = 1;
 
         if (goodsCount > 0) { //True
-            console.log(`Количесво товаров: ${goodsCount}`); // Show
+            console.log(`Количество товаров: ${goodsCount}`); // Show
         } else {
             console.log('Товары отсутвуют');
         }
 
         // Запись без фигурных скобок
-        if (true)
-            console.log('hello'); // Только если одна команда после if !
-        else
-            console.log('NaN');
-
+        if (true) console.log('hello'); // Только если одна команда после if !
+        else console.log('NaN');
 
         if (0) {  //Если значение 0 то False
             console.log('Sorry');
@@ -69,12 +66,14 @@
 
         ///////........... ТЕРНАРНЫЙ ОПЕРАТОР .............///////////////
         // Тернарный оператор - (Для простых вещей!) - variant #1
+        // condition ? if true : else;
+        // condition ? (if true, if true) : else;      - несколько команд
+        // console.log(condition ? if true : else);
         goodsCount = 1;
 
         goodsCount > 0
             ? console.log(`Количесво товаров: ${goodsCount}`)   // Show 
             : console.log('Товары отсутвуют');
-
 
         // Тернарный оператор - variant #2
         goodsCount === 0
@@ -84,7 +83,6 @@
             )
             : console.log('Happy');
 
-
         // Тернарный оператор - variant #3
         console.log(
             goodsCount > 0
@@ -92,7 +90,7 @@
                 : 'Товары отсутвуют'
         );
 
-        // Тернарный оператор - variant #3
+        // Тернарный оператор - variant #4
         alert(
             age < 18
                 ? "Вам скидка 10%"
@@ -101,12 +99,13 @@
                     : age >= 60
                         ? "Вам скидка 50%"
                         : "Нет такого возраста"
-        ); // Нерекомендуеммый вариант!
+        ); // Плохой вариант!   
+        //!! Некогда не вкладывайте тернарный оператор в тернарный оператор!!
 
         ///////................ SWITCH CASE .............////////////
         // Сравнивает с === всегда!
         switch ('1') {
-            case 1:                            // Number
+            case 1:           // Number
                 console.log('It`s number');
                 break;
             case '1':                           // String - верное значение !
@@ -176,6 +175,7 @@
         sayPrice('Яблочки'); //#1 Вызов функции
         //#6 Фнукция sayPrice возвращает значение ('Цена яблочков 60р за шт')
         //***********************************************************
+        //***********************************************************
 
         // Мертвый код - Грубая ошибка!
         function name() {
@@ -202,32 +202,34 @@
 
         function getPriceFruits(product) { //#4 Выполнение второй функции 
             switch (product) {
-                case 'Киви':
-                    return 43;
-                case 'Манго':
-                    return 78;
-                case 'Киви':
-                    return 61;
-                case 'Яблоки':
-                    return 57; //#5 Возвращение значение результата функции ^
+                case 'Киви': return 43;
+                case 'Манго': return 78;
+                case 'Киви': return 61;
+                case 'Яблоки': return 57;
+                //#5 Возвращение значение результата функции ^
             }
         }
         ////////////////////////////////////////////////////////////////
 
         //#1#1#1#1#1#1 function declaration #########
         function myFync(params) {
-            console.log('myFync');
+            console.log('Fire');
         }
         myFync();
 
         //#2#2#2#2#2#2 function expression - выражение функции  ###########
         // !!Данную функцию можно вызывать только после обьявления!!
         const myFync2 = function () {
-            console.log('myFync2')
-            console.log(arguments) // {[Iteratior] 0: 12, 1: 32}
+            console.log('Ice')
+            console.log(arguments) // {[Iteratior] 0: 12, 1: 32} - псевдомассив
         }; // точка запятой в отличии от function declaration
 
         myFync2(12, 32);
+        myF(2, 40);
+
+        const myF = function (param, ...others) { //rest
+            console.log(others); // масив со всеми атрибутами
+        }; // [2, 40]
 
         //#3#3#3#3#3#3#3 Стрелочная функция  ###################
         const name = (a, b) => a + b;  // после => всегда работает return
@@ -243,7 +245,6 @@
         }
 
         fn();  // Если Аргумент отсуствует то ^ "параметр по умолчанию"
-        // !! Некогда не вкладывайте тернарный оператор в тернарный оператор!!
         // Переменая - существительное . Функция - глагол!
 
         a > 10 || b > 100 || c > 1000 // Прерываемся на первой true
@@ -253,11 +254,11 @@
 
         a = null ?? 100;           // 100
         a = undefined ?? 100;     // 100
-        a = 786223 ?? 100;       // 786223
+        a = 786 ?? 100;       // 786
 
         throw new Error("Big Error") //throw  - "бросить" ошибку
 
-        if (isNaN(NaN)) {     // проверка на NaN
+        if (Number.isNaN(NaN)) {     // проверка на NaN
             console.log('It`s number NaN')  // It`s number NaN
         }
 

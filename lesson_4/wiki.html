@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI_JS</title>
+    <script src="#" defer></script> <!-- Отложенное подключение -->
+    <script src="#" async></script> <!-- Ассинхронное подключение -->
+</head>
+
+<body>
+    <script>
+        // Директива "Строгий режим"
+        'use strict';
+
+        /////////________________ ООП ___________________///////////
+        // ООП - Методология ( Набор принципов)
+        /*  Принципы ООП:
+           1 . Абстракция - отделение концепции от её экземпляра.
+           2 . Полиморфизм - единственная реализация и множественное поведение.
+           3 . Наследование - создания новых абстракций на основе существующих.
+           4 . Инкапсуляция - несколько схожих по смыслу данных в одной "капсуле"
+         */
+
+        //********************______PROTO______**********************
+        // __PROTO__ - другой object который расширяряет наш object.
+        //{Object} -> {__proto__} -> {__proto__} ... {__proto__} -> null
+
+        const object = {}; //create empty object
+        console.log(object.constructor) // property from __proto__
+        console.log(object.__proto__.__proto__) // null
+
+        const obj = {
+            a: 1,
+            __proto__: {
+                b: 3,
+                c: 7,
+                __proto__: {
+                    z: 67,
+                    __proto__: null
+                }
+            }
+        };
+        console.log(obj.b)      // 3
+        console.log(obj.z)     // 67
+        console.log(obj.boby) // indefined
+
+        // {Object} -> {Proto} -> {Proto} -> {Proto: null} - undifened
+        console.log(obj.boby); // ^^ Search order ^^
+
+        console.log(obj.__proto__) // get __proto__ === { b: 3, c: 7 }
+        console.log(Object.getPrototypeOf(obj)); // get __proto__
+
+        const user = { ame: 'Kirill' }; //create new object
+        console.log(object.__proto__ === user.__proto__) // TRUE
+        // одинаковые ссылки на __proto__ ^^^^ т.к fn-con -> Object
+
+        //create new prototype в которой указываются proto, которые ей переданны
+        Object.create(null) // object sans __proto__ (not property)
+
+        //........................ MERHODS ........................//
+        // свойство содержащее функцию - method 
+        const myCar = {
+            model: 'BMW',
+            beep: function () { //1# old variant
+                console.log('Beep-Beep!');
+            },
+            beep() { //2# NEW variant !
+                console.log('!!Beep-Beep!!');
+            }
+        };
+        myCar.beep(); // вызов метода - '!!Beep-Beep!!' 
+
+
+        const myCar_1 = { // BAAD variant !
+            model: 'ВАЗ',
+            beep() {
+                console.log(`${myCar_1.model}Сигналит!`); // use variable
+            }
+        }; myCar.beep(); // вызов метода - 'ВАЗ Сигналит!' 
+
+        //........................ THIS .........................//
+        // В this будет лежать значение слева от '.' в момент вызова fn
+        // Только если fn не стрелочная !
+
+        const myCar2 = { // GOOD variant !
+            model: 'HONDA',
+            beep() {//       в this находится наш object
+                console.log(`${this.model} Beep-Beep!`);
+            }
+        };
+        myCar2.beep(); // вызов метода - 'HONDA Beep-Beep! 
+
+        //............. FUNCRION CONSTRUCTION ............//
+        //::: У ВСЕХ ПРИМИТИВНЫХ ТИПОВ ДАННЫХ ЕСТЬ СВОЯ ФУНКЦИЯ КОНСТРУКТОР :::
+        // fn-constructor and class пишим с большой буквы !!!
+
+        new Function(); //\\create empty object in which array - ƒ
+        new String();  //  \\create empty object in which string - ''
+        new Number(); //    \\create empty object in which number - 0
+        new Object();//      \\create empty object in which object - {}
+        new Array();//        \\create empty object in which array - []
+
+        /* В JS есть следующие примитивные типы данных: undefined null boolean
+        число строка. Примитивные типы в JavaScript неизменяемые. 
+        Они сравниваются по значению. Все сложные типы — объекты. 
+        Они изменяемые и сравниваются по ссылке. У примитивных типов строка и 
+        число есть конструкторы — глобальные объекты String и Number. 
+        Другие структуры данных, включая массивы, объекты, 
+        функции и классы —  относятся к типу данных OBJECT.*/
+
+        function Car(mark) {
+            //#1  this = {};  создается empty object - this
+            //#2  this.__proto__ = Car.prototype;
+            this.model = mark; // назначения new property (любые действия)
+            //#3  return this
+        }
+        // new - ключевое слово которое создает object (и 3 команды выше)
+        //-------------------------------------------------------------
+        function Car(mark) {
+            this.model = mark; // назначения new property (любые действия)
+            this.beep = function () {
+                console.log(`${this.model} сигналит!`);
+                // property create for each ! (BAAAAAD)
+            }
+        }
+        //-------------------------------------------------------------
+        //Решение Проблемы - №1 ПЛОХОЙ ВАРИАНТ
+        function toBeep() {
+            console.log(`${this.model} сигналит!`);
+        }
+
+        function Car(mark) {
+            this.model = mark; // назначения new property (любые действия)
+            this.beep = toBeep; // fn не вызввается, а назначается !
+            // fn not create more times, and create only LINK
+        }
+        //-------------------------------------------------------------
+        //Решение Проблемы - №2 СУПЕР ВАРИАНТ!
+        function Car(mark) {
+            this.model = mark; // назначения new property (любые действия)
+        }
+
+        Car.prototype.beep = function () {
+            console.log(`${this.model} сигналит!`);
+        };
+
+        //-------------------------------------------------------------
+        // new - ключевое слово которое создает object (и 3 команды выше)
+        const car1 = new Car('BMW');      // { model: 'BMW' }
+        const car2 = new Car('Toyota');  // { model: 'Toyota' }
+        car1.beep(); // BMW сигналит!
+
+        car1 !== car2 // TRUE - разные ссылки
+        Car.prototype === car1.__proto__ === car2.__proto__ // TRUE
+        Car.__proto__ === Function.prototype // TRUE
+        Car.__proto__   // - prototype fn-constructor
+        Car.prototype  // - простой object(свойство) которое будет служить __proto__ для всех objects, созданных от этой fn-constructor.
+
+        Car.prototype.weelsCount = 4; // create new propetry 'weelsCount' : 4
+        console.log(car1.weelsCount) //propetry взятое из __proto__ ( 4 )
+        console.log(car2.weelsCount) //propetry взятое из __proto__ ( 4 )
+
+        console.log(car1 instanceof Car) // True (проверка на конструктор)
+        //.......................METHODS FUNCTION.........................//
+        console.dir() // Отображает список свойств указанного объекта.
+
+        function toBeep() {
+            // this   =    car3   - (method call)
+            console.log(`${this.model} сигналит!`);
+        }
+
+        function Car(mark) {
+            this.model = mark;
+        }
+
+        const car3 = new Car('BMW');  // { model: 'BMW' }
+        toBeep.call(car3)  // method call вставляет указанный object
+        // method call содержится в __proto__ любой fn
+        //-------------------------------------------------
+
+        //...................DRY ( Don't Repeat Yourself )....................//
+
+        function Person(name, pol) {
+            this.name = name;   //#1 Repeat
+            this.gender = pol; //#1 Repeat
+        }
+
+        Person.prototype.sayName = function () {      //#2 Repeat
+            console.log(`Меня зовут ${this.name}!`); //#2 Repeat
+        };
+
+        const person1 = new Person('Кирилл', 'M');
+        person1.sayName(); //  Меня зовут Кирилл!
+        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        function Employee(name, pol, pos) {
+            this.name = name;   //#1 Repeat
+            this.gender = pol; //#1 Repeat
+            this.position = pos;
+        }
+
+        Employee.prototype.sayName = function () {    //#2 Repeat
+            console.log(`Меня зовут ${this.name}!`); //#2 Repeat
+        };
+
+        Employee.prototype.sayPosition = function () {
+            console.log(`Моя должность ${this.position}!`);
+        };
+
+        const employee1 = new Employee('Петр', 'M', 'Дворник');
+        //-------------------------------------------------------------------//
+        //................. Inheritance (Наследование) ES5...................//
+
+        function Person(name, pol) {
+            //#2  this от Employee
+            this.name = name;
+            this.gender = pol;
+            //#3  return this
+        }
+
+        Person.prototype.sayName = function () {      //#2 Repeat
+            console.log(`Меня зовут ${this.name}!`); //#2 Repeat
+        };
+
+        const person2 = new Person('Кирилл', 'M');
+        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        function Employee(name, pol, position) {
+            //#1 передает this Employee
+            Person.call(this, name, pol); //#4 return this от Person (Employee)
+            this.position = position;
+        }
+
+        // create new object with use __proto__  -  Person.prototype
+        Employee.prototype = Object.create(Person.prototype) // Наследование merhods
+        // BUT DELITE CURRENT CONSTRUTOR!! 
+        Employee.prototype.constructor = Employee; //return current constructor
+        // В |Employee.prototype.__proto__| находится merhod |sayName|
+
+        Employee.prototype.sayPosition = function () {
+            console.log(`Моя должность ${this.position}!`);
+        };
+
+        const employee2 = new Employee('Петр', 'M', 'Дворник');
+
+        console.log(person2.constructor) // show fn-constr объекта - [λ: Person]
+        //------------------------------------------------------------------//
+        //................. Inheritance (Наследование) ES6...................//
+
+        class Person {
+            constructor(name, pol) {
+                this.name = name;
+                this.gender = pol;
+            }
+
+            sayName() {
+                console.log(`Меня зовут ${this.name}!`);
+            };
+            //№1 method внедряется уже в сам Person, а не в его prototype
+        }
+        const person3 = new Person('Кирилл', 'M');
+        person3.sayName() // Меня зовут Кирилл!
+        console.log(person3.constructor) //№2 |Class Person|, а не ƒ
+        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        class Employee extends Person {
+            constructor(name, pol, position) {
+                super(name, gender); // вызов базового конструктора (заменна: call)
+                this.position = position;
+            }
+
+            //№3 extends заменяет запись : {
+            // Employee.prototype = object.create(Person.prototype);
+            // Employee.prototype.constructor = Employee; 
+            //}
+
+            sayPosition() {
+                console.log(`Моя должность ${this.position}!`);
+            };
+        }
+
+        const employee3 = new Employee('Петр', 'M', 'Дворник');
+        //------------------------------------------------------------------//
+        //------------------------------------------------------------------//
+        function Con(text) {
+            this.text = text;
+            return { name: 'Alvin' }
+            //вернется только object (так делать не надо)
+        }
+        //----------------------------Getter------------------------------//
+        class User {
+            constructor(name, surname) {
+                this.name = name;
+                this.surname = surname;
+            }
+            // Getter - Добытчик
+            get fullName() { // вызыватеся не как merhod, а как simple property
+                return this.name + ' ' + this.surname
+            }
+        } const user1 = new User('John', 'lanny');
+        console.log(user1.fullName); // John lanny
+
+        //----------------------------Setter------------------------------//
+        class Adress {
+            url = 0
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            // Setter -  механизм для установки - проверка на условия и назначение
+            set vkUrl(url) {
+                if (/^https?.*/gm.test(url)) { // проверка на сайт
+                    this.url = url; // установка значения в случае true
+                } else {
+                    throw new Error('Passed invalid url value');
+                }
+            }
+        } const user2 = new User('John', 34);
+        user2.url = 'https:/vk.com/John' // success - setting a new property
+        user2.url = 'Hello' // Passed invalid url value
+
+    </script>
+</body>
+
+</html>
