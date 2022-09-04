@@ -34,12 +34,12 @@
         // Цикл №3
         for (первый; второй; третий) {
             // Отделы:
-            // первый - действие до начала цикла напр. создание переменой несколько ","
+            // первый - действие до начала цикла (создание переменой, несколько ",")
             // второй - условие выполнения цикла
             // третий - действие после каждой итерации (несколько дейсвий через ",")
         }
 
-        console.log(Number.isInteger(i)) //Проверка на целое число - True  (i = 0)
+        console.log(Number.isInteger(i)) //Проверка на целое число - True (i = 0)
 
         for (let i = 0; i < 3; i++) {      //переменая i создается в local scope.
             console.log('Hello, World!'); //  компактнее и удобнее!
@@ -71,20 +71,19 @@
                 continue; // Остановка и возвращение к выражению шага.
             } console.log(i);
         }
-        // Вывод: ( 1  2  Two  3 )
-
+        // Вывод: (0  1  Two  3)
         // Жалательно continue и break не использовать из-за усложнении логики кода.
 
         //..................... ARRAY(МАССИВЫ) .....................
         // INDEX:     0       1        2       3   4
         const all = [123, 'Kirill', 'Alica', true, i]; // array
-        // индекс === названия свойсва === key
+        // индекс === названия свойства === key
 
         //..........................ARRAY METHODS..............................
         console.log(all.length)  // method для определении длины (5)
 
         all[0] = 'Pavel'   // преопределение индекса массива
-        all[10] = false   // array  увеличится до 10 и заполнит все пустыми значениями.
+        all[10] = false   // array увеличится до 10 и заполнит все empty значениями.
 
         all.push('tiger', 23)  // method для добавлении * в конец массива
         all.pop()         // method для удаления * с конца массива
@@ -92,7 +91,7 @@
         all.unshift('firts')  // method для добавлении * в начало массива
         all.shift()          // method для удаления * с начала массива
 
-        // При удалении можно присваивать * в переменую
+        // При удалении return element
         const FirstDelItem = all.shift();   // Первый удаленный 
         const LastDelItem = all.pop();     // Последний удаленный 
         console.log(`Первое значение - ${FirstDelItem} - удаленно`);
@@ -102,15 +101,36 @@
         all.splice(4)            // удалить все item после 4 
         all.splice(4, 0, 'hi')  // add new item ('hi') after index 4
 
+        //array.slice создает копию array с указаным диапазоном индексов
+        const allCop = all.slice(1, -1); // копия без первого и последнего latter
+
         all.forEach(function (element, index, array) {
             console.log(`В массиве под индексом: ${index}, значение: ${element}`);
         });// run функцию для элемента || индекса || массива 
 
-        const newArr = all.filter((element, index, array) => { // стрелочная func
+        const newArr = all.filter((element, index, array) => { //стрелочная func
             return Number.isInteger(element); //  [124, 4]
-        });// создает new array и add only те значение которые прошли функцию
+        });// create copy array и add only те значение которые прошли функцию
+
+        // как filter, только возвращает первое значение удовл. condition
+        const newArr2 = all.find(item => item > 0); // find - находить
+
+        const newArr3 = all.includes('Alica'); // также как if in (true)
+
+        const str = 'Lorem ipsum dolor sit amet consectetur adipisicing elit'
+        //переобразует в array путем указания разделителя
+        const arrStr = str.split(' ');
+        // переобразует в string путем указания разделителя
+        const againStr = arrStr.join(' ');
+
+        const arrNum = [13, 32, 676, 864, 8]; // method - калькулятор 
+        // x = initian                  x                  x              x
+        const amount = arrNum.reduce((total, element) => total + element, 0);
 
         //..................... OBJECT(ОБЬЕКТЫ) .....................
+        const c = {}, b = {};
+        a === b // false - objects сравниваются по ссылки памяти
+
         const user = {
             //  property: value,
             name: 'Kirill',
@@ -125,10 +145,18 @@
         // 'Kirill' - получения значения через точку #2
         console.log(user['I Q']);  // Infinity
 
-        user.knowledge = 'JS';// Добавления нового свойтва и его значения 
-        console.log(user); // {name: 'Kirill', age: 23, knowledge: 'JS'}
+        user.knowledge = 'JS';// Добавления нового свойcтва и его значения 
+        console.log(user); // {name: 'Kirill', ... , knowledge: 'JS'}
         user.name = 'Кирилл';  // пререопределение значения свойства
+        delete user['I Q']; // delete property (return boolean) если успешно true 
 
+        Object.assign(user, { age: 10, }) // 
+        //*************************************************
+        const target = { a: 1, b: 2 };
+        const source = { b: 4, c: 5 };
+        //                                      <-      <-
+        const returnedTarget = Object.assign(target, source); // coppy
+        //*************************************************
         // object описывает что-то
         const badUsers = [
             {
@@ -143,7 +171,7 @@
             }
         ] // Масив двух обьектов 
 
-        // Двухмерный массив
+        // Многомерный массив
         const arrTwo = [
             [23, 434, 6, 34],
             ['hi', 'hello', 'he he'],
@@ -154,20 +182,22 @@
         const arr = [5, 7, 9]; // use переменой вместо цифры index
         let a = 1; console.log(arr[a]); // 7
 
+        console.log(Object.getOwnPropertyNames(arr)); // 0, 1, 2, length
+
         // перебор array #1
-        for (let i = 0; i < (arr.length); i++) {
+        for (let i = 0; i < arr.length; i++) {
             console.log(arr[i]);  //  5   7   9 
         }
 
         // перебор array #2
         for (const i in arr) {
             console.log(i);  //  0   1   2 
-        } // преребирает все  № индекса у массива или свойcтва у object
+        } // преребирает все № индекса у массива или свойcтва у object
 
         // перебор array #3
-        for (const val in arr) {
+        for (const val of arr) {
             console.log(val);  //  5   7   9 
-        } // преребирает все значения у object или у массива.
+        } // преребирает все значения только массива!
         /* однако значения object можно перебрать в случае если у него
          иемется функция  -  symbol.iterator !
         */
@@ -183,7 +213,7 @@
             // при каждой итерации создается new const
             const includeArr = array[i];
             for (let i = 0; i < includeArr.length; i++) {
-                console.log(includeArr[i]);
+                console.log(includeArr[i]); // 12
                 break uoterLoop; // lable(метка) - останавливает внешний цикл
             }
         }
@@ -196,6 +226,7 @@
         ];
         console.log(user[1].age)        //  45
         console.log(users[2]['name'])  //  Светлана
+
         /////////////////////...HARD OBJECT...//////////////////////////
         const badUser = {
             id: 4,
@@ -211,18 +242,21 @@
             ]
         };
 
-        console.log(badUser.socialNetworks.vk);  //  https://vk.com/John
+        console.log(badUser.socialNetworks.vk);  // https://vk.com/John
         console.log(badUser.cats) // undefined
         console.log(badUser.cats.cat) //  !! BIG ERROR !!
         // ? - оператор опциональной последовательности 
-        console.log(badUser.social?.Net);
+        console.log(badUser.cats?.cat); // undefined
         // показывает null || undefined в случает если свойтво таково, иначе
         // показывает свойство другого объекта в объекте.
 
         if ('socialNetworks' in badUser) {
-            console.log('Свойтво socialNetworks имеется внутри badUser');
+            console.log('Свойтво socialNetworks имеется внутри badUser'); //Show
         } // проверка на наличие свойства внутри обекта
 
+        // boxing
+        console.log('monkey'[2]) // получение символа строки  -  n
+        console.log('monkey'.charAt(0)) // получение символа строки  -  m
     </script>
 </body>
 
