@@ -70,10 +70,10 @@ laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
         console.log(10 / 0); // Infinity
         c = Infinity // Существующее значение как и  -0 и  -Infinity
         console.log('Happy' * 10) // NaN - Not a number (Ошибка вычеслений)
-        console.log(typeof NaN) // Number)
+        console.log(typeof NaN) // Узнать тип данных : operator - typeof
 
         // Превращение string в number
-        let strNumber = '9.43ccc' // Некоектное число первые 4 комадны = NaN
+        let strNumber = '9.43ccc' // Некоектное число первые 4 команды = NaN
         c = "56.076"
 
         console.log(+c)        // 56.076
@@ -83,6 +83,7 @@ laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
         console.log(parseInt(strNumber))// Разбор челого числа = 9
         // Разбор числа с плавяющей точкой
         console.log(parseFloat(strNumber))// = 9.43
+
         console.log(0.1 + 0.2) // 0.30000000000000004 (-_-)
         0.1 + 0.2 !== 0.3 // TRUE!
         10 / 3 === 3.33333333333333335 // (-_-)
@@ -93,14 +94,15 @@ laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
         console.log(Math.floor(c)) // Округление к меньшему = 56
         console.log(Math.ceil(c)) // Округление к большему = 57
         console.log(Math.trunc(c)) // Отбрасывает дроб.часть = 56 Truncated (усеченный)
-        console.log(c.toFixed(2))// 56.07 Срезать знаки после точки
+        //toFixed -- prototype Number
+        console.log(c.toFixed(2))// 56.07 убрать знаки после точки
         console.log(c.toFixed(7)) // 23.3430000
         0xFF2300 == 16720640
         2e10 == 20_000_000_000 == 20000000000
 
         //33333333333333333333333333333333333333333333333333333333333333333
-        //////////// BIGINT ///////////////
-        2 ** 53 // После этого числа теряется точность
+        //////////// BIGINT ///////////////  - only integer !
+        2 ** 53 - 1 // После этого числа теряется точность
         2783648723645237465237645237645732645n // typeof = bigint
         /*
             С помощью '+' нельзя превратить bigint в (number)!
@@ -109,8 +111,8 @@ laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
 
         //444444444444444444444444444444444444444444444444444444444444444444
         //////////// BOOLEAN ///////////////
-        console.log(6 === 3) // False
-        console.log(6 === 6) // True 
+        console.log(6 === 3);  // False
+        console.log(6 === 6); // True 
 
         //5555555555555555555555555555555555555555555555555555555555555555
         //////////// Null ///////////////
@@ -125,22 +127,21 @@ laudantium, fuga, libero ipsam. Animi fuga ex voluptas pariatur\
         //////////// Symbol ///////////////
         // Уникальное значение которое нельзя повторить)
 
-        //8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#8#
+        //888888888888888888888888888888888888888888888888888888888888888888
         //////////// Object ///////////////
-        // Набор данных из вышеприсутвующих
         const object = {
-            user: hero,
+            user: 'hero',
             gamage: 755
         };
         ///////////////////////////////////////////////////
 
-        console.log(typeof null) // Object - ОШИБКА ERROR
+        console.log(typeof null) // Object - offician error
         const gg = function () { };
-        console.log(typeof gg) // function - ОШИБКА ERROR == Object
+        console.log(typeof gg) // function - offician feature == Object
         //*****************************************************************
         c = 34 + 23; // c,34,23 - операнды а = и + - операторы
         234236487 % 2 // определение честности числа 
-        34324 % 10 //определение последнего числа (2)
+        34324 % 10 //определение последнего числа (4)
         c = 4
         c += 4 // 8
         c *= 4 // 16

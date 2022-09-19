@@ -57,14 +57,15 @@
         // Примеры бесконечного цикла:
         while (true) {
             console.log('Wow');
-            break; // Выход из infiniti loop@
+            break; // Выход из infiniti loop@ в случае run code
         }
 
         for (; ;) {
             console.log('Wow');
-            break; // Выход из infiniti loop@
+            break; // Выход из infiniti loop@ в случае run code
         }
 
+        // Continue
         for (let i = 0; i < 4; i++) {
             if (i === 2) {
                 console.log('Two');
@@ -104,9 +105,16 @@
         //array.slice создает копию array с указаным диапазоном индексов
         const allCop = all.slice(1, -1); // копия без первого и последнего latter
 
+        // выполняет указанную fn один раз для каждого элемента в массиве.
+        // при return возвращает undefined
         all.forEach(function (element, index, array) {
             console.log(`В массиве под индексом: ${index}, значение: ${element}`);
         });// run функцию для элемента || индекса || массива 
+
+        // create new array with more features
+        const newAll = all.map((element, index, array) => {
+            return element -= 1; // [ 122, NaN, NaN, 0, 3 ]
+        }); // Во многих случаях метод forEach() медленнее метода map()
 
         const newArr = all.filter((element, index, array) => { //стрелочная func
             return Number.isInteger(element); //  [124, 4]
@@ -119,17 +127,24 @@
 
         const str = 'Lorem ipsum dolor sit amet consectetur adipisicing elit'
         //переобразует в array путем указания разделителя
-        const arrStr = str.split(' ');
+        const arrStr = str.split(' '); // split -- раскол
+
         // переобразует в string путем указания разделителя
-        const againStr = arrStr.join(' ');
+        const againStr = arrStr.join(' '); // join -- соединение
 
         const arrNum = [13, 32, 676, 864, 8]; // method - калькулятор 
         // x = initian                  x                  x              x
         const amount = arrNum.reduce((total, element) => total + element, 0);
 
+        // группировка methods (chain) - цепь
+        const newArrNum = arrNum
+            .filter(item => item < 100)   // [13, 32, 8]
+            .reduce((total, item) => total + item, 0); // 53
+
+        consloe.log(newArrNum); // 53
         //..................... OBJECT(ОБЬЕКТЫ) .....................
         const c = {}, b = {};
-        a === b // false - objects сравниваются по ссылки памяти
+        a !== b // true - objects сравниваются по ссылки памяти
 
         const user = {
             //  property: value,
@@ -140,9 +155,9 @@
         };
         console.log(user[10])      // ten
 
-        // 'Kirill' - получения значения через точку #1
+        // получения значения свойства через точку #1
         console.log(user.name); // Kirill
-        // 'Kirill' - получения значения через точку #2
+        // получения значения через точку #2
         console.log(user['I Q']);  // Infinity
 
         user.knowledge = 'JS';// Добавления нового свойcтва и его значения 
@@ -150,7 +165,10 @@
         user.name = 'Кирилл';  // пререопределение значения свойства
         delete user['I Q']; // delete property (return boolean) если успешно true 
 
-        Object.assign(user, { age: 10, }) // 
+        //#1 copy in empty obj and assignment to newUser
+        const newUser = Object.assign({}, user);
+        Object.assign(user, { age: 13 }); // assignment current property new value
+        Object.assign(user, { force: '77 J' }); // add new property
         //*************************************************
         const target = { a: 1, b: 2 };
         const source = { b: 4, c: 5 };
@@ -182,7 +200,8 @@
         const arr = [5, 7, 9]; // use переменой вместо цифры index
         let a = 1; console.log(arr[a]); // 7
 
-        console.log(Object.getOwnPropertyNames(arr)); // 0, 1, 2, length
+        // returns an array of all properties 
+        console.log(Object.getOwnPropertyNames(arr)); // [0, 1, 2, 'length']
 
         // перебор array #1
         for (let i = 0; i < arr.length; i++) {
@@ -245,14 +264,14 @@
         console.log(badUser.socialNetworks.vk);  // https://vk.com/John
         console.log(badUser.cats) // undefined
         console.log(badUser.cats.cat) //  !! BIG ERROR !!
-        // ? - оператор опциональной последовательности 
+        // ? -- оператор опциональной последовательности 
         console.log(badUser.cats?.cat); // undefined
-        // показывает null || undefined в случает если свойтво таково, иначе
-        // показывает свойство другого объекта в объекте.
+        // показывает null || undefined в случает если свойтво undefined, иначе
+        // показывает все верно.
 
         if ('socialNetworks' in badUser) {
             console.log('Свойтво socialNetworks имеется внутри badUser'); //Show
-        } // проверка на наличие свойства внутри обекта
+        } // проверка на наличие свойства внутри object
 
         // boxing
         console.log('monkey'[2]) // получение символа строки  -  n
