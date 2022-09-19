@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI_JS</title>
+    <script src="#" defer></script> <!-- Отложенное подключение -->
+    <script src="#" async></script> <!-- Ассинхронное подключение -->
+</head>
+
+<body>
+    <h1>Welcome!</h1>
+    <div class="especial">
+        hello
+        <!-- hello -- текстовый узел -->
+        Hello <span style="display: none;">World</span>
+    </div>
+    <div class="block">
+        <p id="strong-text" class="test">Lorem ipsum dolor sit, </p>
+        <p class="ve">Vel eos, aliquid accusamus minima mollitia</p>
+        <p class="test">Asperiores eveniet iusto ipsam laudantium?</p>
+        <p class="test">Tempora explicabo ab placeat porro.</p>
+    </div>
+    <button class="btn" data-leng="en">Кнопка</button>
+
+    <script>
+        // Директива "Строгий режим"
+        'use strict';
+
+        /////////________________ DOM ___________________///////////
+        // DOM - Document Object Model («объектная модель документа»)
+
+        console.log(window) // глобальная переменая всего окна браузера
+        console.log(window.close()) // закрыть web страницу
+        window.alert() // method alert является property of window
+
+        console.log(window.document); // this a object - THE DOM!
+        console.log(document); // other form записи
+
+        //  console.dir -- show list свойств указанного JavaScript объекта.
+        console.dir(document);
+
+        // Element - object который отвечает за какой-то tag на странице
+
+        //........................ Search Elements .........................//
+
+        // All elements(tags) in JS будут представлены как objects
+
+        console.log(document.getElementById('strong-text')) // search by ID
+        // return link на element
+
+        console.log(document.getElementsByClassName('ve'));
+        console.log(document.getElementsByTagName('p'));
+        // return HTMLColection === Array Like === массивоподобный object
+        //^^^^^^^^^^^^^^^^^^^^^^^^^ Old variants ^^^^^^^^^^^^^^^^^^^^^^^^//
+
+        //Query -- (запрос)  append -- (добавлять)  -- Node -- (узел)
+
+        //......................... Used variants .......................//
+        // return первый by search
+        console.log(document.querySelector('.text'));
+
+        // return all selectors in |NodeList| === Array Like 
+        console.log(document.querySelectorAll('p:nth-child(2n)'))
+
+        // Object HTMLColection - динамическая коллекция 
+        // Object NodeList - почти всегда статическая кроме call .childNodes
+
+        // переменные содержащие tags можно назвать (pEls) || (pTags)
+        const pEls = document.querySelectorAll('p'); // присваиваем NodeList
+
+        for (let i = 0; i < pEls.length; i++) {
+            console.log(pEls[i]); // перебор all tags из NodeList -- <p>)
+        }
+
+        // NodeList имеет symbol.iterator (можно перебрать be for of)
+        for (let i of pEls) {
+            console.log(i); // выводим NodeList (all tags - <p>)
+        }
+        //...........................................................
+
+        console.log(document.documentElement); // show document (HTML || XHM)
+        console.log(document.head);    // show head 
+        console.log(document.title);  // show title (text)
+        console.log(document.body);  // show body
+        console.log(document.forms);   // show HTMLCollection (forms)
+        console.log(document.images); // show HTMLCollection (images)
+        console.log(document.links); // show HTMLCollection (links)
+
+        //.......................|Node| && |Element|.........................//
+        //...................... Properties Elements .......................//
+
+        //  цель события      узел        тэг
+        // |Event Tarhet| <- |Node| <- |Element|   --  наследование
+
+        const divEl = document.querySelector('.block');
+        // nodes - тэги, переносы слов
+        divEl.children;     // HTMLCollection elements
+        divEl.childNodes;  //  NodeList nodes
+
+        console.log(divEl.querySelector('p:last-child')); //search внутри variable
+
+        console.log(divEl.innerText); // show text внутри element (видный глазу)
+        console.log(divEl.textContent); // show весь текст и переносы inside tag
+        console.log(divEl.innerHTML); // show all html inside tag
+
+        divEl.innerText = '<h1>Hello World!</h1>';    // append text (text)
+        divEl.textContent = '<h1>Hello World!</h1>'; // append text (text)
+        divEl.innerHTML = '<h1>Hello World!</h1>';  //set element (element + text)
+
+        //......................... Methods Elements ........................//
+
+        const h2El = document.createElement('h2'); // create new element
+        h2El.textContent = 'Hello World!' // append text in <h2>
+
+        divEl.appendChild(h2El) // append child in end (добавляеет дочерний элемент)
+        // not copy а переместиться!
+
+        //           (true) для глубокой копии element c содержимым внутри
+        const h2ElClone = h2El.cloneNode(true); // return copy element(node)
+        divEl.appendChild(h2ElClone); // append element sans change position
+
+        // удаление элемента 
+        h2ElClone.remove();
+
+        // paste elements ++++++++++++++++++++++++++++++++++++++++++++++++
+
+        Element.insertAdjacentHTML('beforebegin', '<p>text</p>'); /* insert - вставка
+        Position:                       only ^strung^
+
+       |beforebegin|: до самого element(до открывающего тега).
+       |afterbegin|: сразу после открывающего тега element(перед первым потомком).
+       |beforeend|: сразу перед закрывающим тегом element(после последнего потомка).
+       |afterend|: после element(после закрывающего тега).                 */
+
+        // insert [object HTMLParagraphElement] as h2El -- object (bad)
+        divEl.insertAdjacentHTML('afterend', h2El); // only ^strung^
+        divEl.insertAdjacentElement('afterend', h2El); // insert tags (good)
+
+        divEl.before('<p>Добавление до node</p>');// insert text and variabe (text)
+        divEl.prepend('Добавление в начало node');
+        divEl.append('Добавление в конец node');
+        divEl.after('Добавление после node');
+        divEl.after(h2E); // insert text and variabe
+        divEl.replaceWith('Заменяет node на этот текст');
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
+        //.......................... Use Classes .........................//
+
+        const btEl = document.querySelector('button');
+        console.log(btEl.className) // show all classes 
+        console.log(btEl.tagName) // show tag элемента 
+        btEl.className = 'class_1 class_2'; // rename all classes
+
+        //(Cпособ better!)
+        console.log(btEl.classList) // show  DOMTokenList  == Array Like  
+        btEl.classList.add('new_class') // add new class
+        btEl.classList.remove('new_class') // remove class
+        btEl.classList.toggle('new_class') // if class существует ? remove : add
+        btEl.classList.replace('old_class, new_class') // replace a class 
+        btEl.classList.contains('new_class') // check for существование (true)
+
+        //............................ Use ID .............................//
+        console.log(btEl.id) // show ID
+        btEl.id = 'superID' // append and rename ID
+
+        //......................... Use Attribute ..........................//
+        console.log(btEl.attributes); // show all attributes (NamedNodeMap)=|AL|
+
+        btEl.getAttribute('data-leng') // return value to attribute (en)
+        btEl.setAttribute('class', 'hi') //set new attribute (attribute, value)
+        btEl.removeAttribute('class')  // remove attribute
+
+        //......................... Use Styles .........................//
+        const pEl = document.querySelector('p');
+        console.log(pEl.style) // show только inline style !!!
+        pEl.style.color = 'red' // set new inline style (only inline style) BAAD!
+
+        Window.getComputedStyle(pEl) // get oll style element
+        // CSSStyleDeclaration === Array Like
+
+        //____________________ Casrom Attribute(|date - ...|) _______________//
+
+        console.log(btEl.dataset); // get DOMStringMap == |AL| {leng: 'en'}
+        btEl.dataset.lang = 'ru'  // rename value 
+        btEl.dataset.hi = 'hi'  // add new propetry 
+        delete btEl.dataset.hi;  // delete propetry from an object
+
+        //....................................................................//
+        //___________________________EVENT(событие) _________________________//
+        //#1 add event с помощью atribut (very old variant) -смесь js and html:(
+
+        btEl.onclick = () => { //#2 old and baad variant also!
+            alert('При нажатии кнопки сработает данное событие!');
+        };
+        btEl.onclick = null; // снять событие
+
+        //.................. #3 NEW SUPER VARIANT) 
+
+        btEl.addEventListener('click', () => {
+            alert('При нажатии кнопки сработает данное событие!');
+        });
+
+        // + new varian - событий может быть больше, they dont rename
+        btEl.addEventListener('click', event => {// (прислушиватель событий)
+            console.log(event);
+        }); // addEventListener принимает for fn единсвенный param -- event
+
+        // |event| = full info obout event 
+        // |event.target| = show link object whiсh been инициатором event
+        // |event.currentTarget| = show на кого установленно event
+        // |event.type| = show type event
+        // |event.code| = show какая клавиша была нажата
+
+        //..................... #4 NEW SUPER VARIANT (TWO)
+
+        const coco = () => {
+            console.log('При нажатии кнопки сработает данное событие!');
+        };
+
+        //target.addEventListener(type, listener[, options]);
+
+        btEl.addEventListener('click', coco);     // set avent
+        btEl.removeEventListener('click', coco); // remove avent
+        // при удалении важно указать ту же fn(link) что назначили !
+
+        //                                      run only 1 раз
+        btEl.addEventListener('click', coco, { once: true });
+
+        /*..................... EVENTS
+        1# |click| нажатие и отпуск любой кнопки mouse
+
+        2# |mouseover| при наведении mouse
+
+        3# |DOMContentLoaded| — событие происходит, когда браузер разобрал HTML-страницу и составил DOM-дерево; 
+
+        4#|load| — событие происходит, когда загрузилась и HTML страница, и все ресурсы для её отображения пользователю: стили, картинки и так далее. (вещается на window)
+
+        5# |keydown| нажатие любой клавиши кроме mouse
+        6# |keydup| отпуск любой клавиши кроме mouse
+        7# |keypress| нажатие и отпуск любой клавиши кроме mouse
+        //.................................................................*/
+        //______________________ Погружение и Всплытие ______________________.*/
+        // событие сначала погружается а затем всплывает!
+
+        btEl.addEventListener('click', coco, true); // set на погружение   
+
+        btEl.addEventListener('click', event => {
+            event.preventDefault();                   //prevent - предотвращать
+        }); // отменяет стандартное поведение
+
+        btEl.addEventListener('click', event => {
+            event.stopPropagation();            //propagation - распространение
+        }); // прекращает дальнейшую передачу текущего события.
+
+        btEl.addEventListener('click', event => {
+            event.stopImmediatePropagation();       // Immediate - немедленный
+        }); // stop цепочку call enent для последующих обработчиков DOM-элемента.
+
+        //........................ Делегирование событий
+
+        const el = document.querySelector('block');
+
+        el.addEventListener('click', event => {
+            if (event.target.tagName === 'P') {
+                console.log('При нажатии tags "P" сработает event!');
+            } else return; // иначе вернется empty vulue
+        });
+
+        //.................................................................*/
+        // отложеннаяя function
+        setTimeout(() => {
+            alert('Выполнится через 7 секунд!')
+        }, 7000); // second parameter set time in ms
+    </script>
+</body>
+
+</html>
