@@ -115,12 +115,14 @@
         const h2El = document.createElement('h2'); // create new element
         h2El.textContent = 'Hello World!' // append text in <h2>
 
-        divEl.appendChild(h2El) // append child in end (добавляеет дочерний элемент)
-        // not copy а переместиться!
+        divEl.appendChild(h2El) // append child in end (добавляеет дочерний элемент)  // not copy а переместиться!
+        divEl.insertBefore(h2El, nextSibling) // insert before 'nextsibling'
+        divEl.replaceChild(newElem, h2El) // replace with 'newElem'
 
         //           (true) для глубокой копии element c содержимым внутри
         const h2ElClone = h2El.cloneNode(true); // return copy element(node)
         divEl.appendChild(h2ElClone); // append element sans change position
+        divEl.removeChild(h2El) // remove из списка детей 
 
         // удаление элемента 
         h2ElClone.remove();
@@ -213,6 +215,7 @@
         // |event.currentTarget| = show на кого установленно event
         // |event.type| = show type event
         // |event.code| = show какая клавиша была нажата
+        // |event.key| = show какая клавиша была нажата
 
         //..................... #4 NEW SUPER VARIANT (TWO)
 
@@ -274,6 +277,15 @@
         setTimeout(() => {
             alert('Выполнится через 7 секунд!')
         }, 7000); // second parameter set time in ms
+
+        setInterval(() => {
+            alert('Будет выполнятся через  каждые 3 секунд!')
+        }, 3000); // second parameter set time in ms
+
+        //.................................................................*/
+        Window.onload = () =>
+            console.log('Функция выполнится псоле загрузки страницы');
+
     </script>
 </body>
 

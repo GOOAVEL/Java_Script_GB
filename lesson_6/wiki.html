@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIKI_JS</title>
+    <script src="#" defer></script> <!-- Отложенное подключение -->
+    <script src="#" async></script> <!-- Ассинхронное подключение -->
+</head>
+
+<body>
+    <input type="text">
+
+    <select name="" id="">
+        <option value="one">один</option>
+        <option value="two">два</option>
+        <option value="three">три</option>
+    </select>
+    <br>
+
+    <script>
+        // Директива "Строгий режим"
+        'use strict';
+
+        //___________________________EVENT(событие) _________________________//
+        // .......................... TYPE EVENTS    ........................//
+
+        // |contextmenu|  --   (click by contextmenu)
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault(); // предотвращает default event 
+        });
+
+        document.addEventListener('copy', event => {
+            console.log(event); // return ClipboardEvent -- type event
+
+
+            //                          get скопированный текст 
+            const copiedText = document.getSelection().toString();
+            event.preventDefault(); // предотвращает default event 
+            event.clipboardData.setData('text/plain', '(~_-)')
+        });
+
+
+        // |resize| - run при изменении окна браузера
+        window.addEventListener('resize', event => {
+            console.log(window.innerWidth, window.innerHeight); // (on scrollbar)
+            console.log(
+                window.document.documentElement.clientWidth, // (off scrollbar)
+                window.document.documentElement.clientHeight // (off scrollbar)
+            );
+        });
+
+
+        // |change| -- при изменениии element run event
+        document.querySelector('input').addEventListener('change', event => {
+            console.log(event.target.value);
+        });
+
+
+        // |input| -- при динамическом изменениии input
+        document.querySelector('input').addEventListener('input', event => {
+            console.log(event.target.value);
+        });
+
+
+        // search tag @select
+        document.querySelector('select').addEventListener('input', event => {
+            // return HTMLCollection === all options tag @select
+            console.log(event.target.options);
+
+            // get link на выбранный options use           index
+            let opt = event.target.options[event.target.options.selectedIndex]
+            console.log(opt.textContent); // get vulue inside option
+        });
+
+
+        const inpEl = document.querySelector('input');
+        // run при фокусе input
+        inpEl.addEventListener('focus', event => {
+            inpEl.style.outline = '3px solid skyblue';
+        });
+        ;
+        // run при снятия фокуса
+        inpEl.addEventListener('blur', event => {
+            inpEl.style.removeProperty('outline')
+        });
+
+        // ..................... form
+
+        // |submit| -- run при отправке form
+        document.querySelector('form').addEventListener('submit', event => {
+            if (inpEl.value === '') {
+                event.preventDefault();
+                alert('Не оставляйте строку пустой');
+            }
+        });
+
+        // |scroll| -- run при scroll of page
+        window.addEventListener('scroll', event => {
+            console.log(window.pageYOffset); // count pixel сверху
+            console.log(window.pageXOffset); // count pixel по гаризонтали
+
+            // желательно в этой функции выпольнять чтото легковестное
+        });
+
+        // ..................... video
+    </script>
+</body>
+
+</html>
